@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
 import time
 
 #configurar as opções do chrome
@@ -38,41 +39,55 @@ time.sleep(5)
 navegador.find_element(By.XPATH, '//*[@id="btn-filtros"]').click()
 
 # Esperar o campo de data ficar visível
-time.sleep(2)  # Ajuste o tempo conforme necessário
+time.sleep(4)  # Ajuste o tempo conforme necessário
 
 # Clicar no campo de data para abrir o seletor de datas
 navegador.find_element(By.XPATH, '//*[@id="find_date"]').click()
 
 # Esperar o seletor de datas aparecer
-time.sleep(2)  # Ajuste o tempo conforme necessário
+time.sleep(4)  # Ajuste o tempo conforme necessário
 
 # Selecionar a opção "Personalizado"
 navegador.find_element(By.XPATH, '/html/body/div[5]/div[3]/ul/li[5]').click()
 
 # Esperar o campo de data personalizado ficar visível
-time.sleep(2)  # Ajuste o tempo conforme necessário
+time.sleep(4)  # Ajuste o tempo conforme necessário
+
+
 
 # Selecionar a data de início: 01/01/2021
 # Selecionar ano de início
-navegador.find_element(By.XPATH, '/html/body/div[5]/div[1]/div[2]/table/thead/tr[1]/th[2]/select[2]').send_keys("2021")
+ano_inicio = Select(navegador.find_element(By.XPATH, '/html/body/div[5]/div[1]/div[2]/table/thead/tr[1]/th[2]/select[2]'))
+ano_inicio.select_by_visible_text("2021")
+
 # Selecionar mês de início
-navegador.find_element(By.XPATH, '/html/body/div[5]/div[1]/div[2]/table/thead/tr[1]/th[2]/select[1]').send_keys("Janeiro")
+mes_inicio = Select(navegador.find_element(By.XPATH, '/html/body/div[5]/div[1]/div[2]/table/thead/tr[1]/th[2]/select[1]'))
+mes_inicio.select_by_visible_text("Janeiro")
+
 # Selecionar dia de início
-navegador.find_element(By.XPATH, '/html/body/div[5]/div[1]/div[2]/table/tbody/tr[1]/td[5]').click()
+navegador.find_element(By.XPATH, '/html/body/div[5]/div[1]/div[2]/table/tbody/tr[1]/td[5]').click()  # 1º dia
 
 # Selecionar a data de fim: 31/01/2021
 # Selecionar ano de fim
-navegador.find_element(By.XPATH, '/html/body/div[5]/div[2]/div[2]/table/thead/tr[1]/th[2]/select[2]').send_keys("2021")
+ano_fim = Select(navegador.find_element(By.XPATH, '/html/body/div[5]/div[2]/div[2]/table/thead/tr[1]/th[2]/select[2]'))
+ano_fim.select_by_visible_text("2021")
+
 # Selecionar mês de fim
-navegador.find_element(By.XPATH, '/html/body/div[5]/div[2]/div[2]/table/thead/tr[1]/th[2]/select[1]').send_keys("Janeiro")
+mes_fim = Select(navegador.find_element(By.XPATH, '/html/body/div[5]/div[2]/div[2]/table/thead/tr[1]/th[2]/select[1]'))
+mes_fim.select_by_visible_text("Janeiro")
+
 # Selecionar dia de fim
-navegador.find_element(By.XPATH, '/html/body/div[5]/div[2]/div[2]/table/tbody/tr[5]/td[7]').click()
+navegador.find_element(By.XPATH, '/html/body/div[5]/div[2]/div[2]/table/tbody/tr[5]/td[7]').click()  # 31º dia
 
 # Confirmar a seleção das datas
-navegador.find_element(By.XPATH, '/html/body/div[5]/div[3]/div/button[1]').click()
+navegador.find_element(By.CSS_SELECTOR, 'body > div.daterangepicker.dropdown-menu.opensright.show-calendar > div.ranges > div > button.applyBtn.btn.btn-sm.btn-success').click()
+
+
 
 # Esperar a página recarregar com os novos filtros
 time.sleep(5)
+
+
 
 
 # Encontrar todos os elementos de arquivos PDF e clicar neles
