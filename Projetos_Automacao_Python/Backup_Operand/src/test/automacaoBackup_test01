@@ -52,13 +52,24 @@ navegador.find_element(By.XPATH, '/html/body/div[5]/div[3]/ul/li[5]').click()
 # Esperar o campo de data personalizado ficar visível
 time.sleep(2)  # Ajuste o tempo conforme necessário
 
-# Selecionar a data inicial e final (Exemplo: 1º de Maio de 2023 a 31 de Maio de 2023)
-# Obs: Dependendo de como o seletor de datas é implementado, você pode precisar ajustar esta parte
-navegador.find_element(By.NAME, 'daterangepicker_start').send_keys("01/05/2023")
-navegador.find_element(By.NAME, 'daterangepicker_end').send_keys("31/05/2023")
+# Selecionar a data de início: 01/01/2021
+# Selecionar ano de início
+navegador.find_element(By.XPATH, '/html/body/div[5]/div[1]/div[2]/table/thead/tr[1]/th[2]/select[2]').send_keys("2021")
+# Selecionar mês de início
+navegador.find_element(By.XPATH, '/html/body/div[5]/div[1]/div[2]/table/thead/tr[1]/th[2]/select[1]').send_keys("Janeiro")
+# Selecionar dia de início
+navegador.find_element(By.XPATH, '/html/body/div[5]/div[1]/div[2]/table/tbody/tr[1]/td[5]').click()
 
-# Clicar no botão "Confirmar"
-navegador.find_element(By.XPATH, '//button[@class="applyBtn btn btn-sm btn-success"]').click()
+# Selecionar a data de fim: 31/01/2021
+# Selecionar ano de fim
+navegador.find_element(By.XPATH, '/html/body/div[5]/div[2]/div[2]/table/thead/tr[1]/th[2]/select[2]').send_keys("2021")
+# Selecionar mês de fim
+navegador.find_element(By.XPATH, '/html/body/div[5]/div[2]/div[2]/table/thead/tr[1]/th[2]/select[1]').send_keys("Janeiro")
+# Selecionar dia de fim
+navegador.find_element(By.XPATH, '/html/body/div[5]/div[2]/div[2]/table/tbody/tr[5]/td[7]').click()
+
+# Confirmar a seleção das datas
+navegador.find_element(By.XPATH, '/html/body/div[5]/div[3]/div/button[1]').click()
 
 # Esperar a página recarregar com os novos filtros
 time.sleep(5)
