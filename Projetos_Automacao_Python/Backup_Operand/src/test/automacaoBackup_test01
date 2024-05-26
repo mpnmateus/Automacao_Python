@@ -32,20 +32,37 @@ navegador.find_element('xpath', '//*[@id="do-login"]').click()
 # Esperar a página carregar (ajuste conforme necessário)
 time.sleep(5)
 
-"""
-# Função para rolar a página até o final
-def rolar_ate_fim_pagina(driver):
-    while True:
-        driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.PAGE_DOWN)
-        time.sleep(3)  # Ajuste o tempo conforme necessário
-        # Verifique se mais elementos foram carregados
-        novos_elementos = driver.find_elements(By.XPATH, '//div[@class="mini-holder other-files pdf"]')
-        if not novos_elementos:
-            break
 
-# Rolar até o fim da página para carregar todos os arquivos
-rolar_ate_fim_pagina(navegador)
-"""
+
+# Clicar no botão de filtro
+navegador.find_element(By.XPATH, '//*[@id="btn-filtros"]').click()
+
+# Esperar o campo de data ficar visível
+time.sleep(2)  # Ajuste o tempo conforme necessário
+
+# Clicar no campo de data para abrir o seletor de datas
+navegador.find_element(By.XPATH, '//*[@id="find_date"]').click()
+
+# Esperar o seletor de datas aparecer
+time.sleep(2)  # Ajuste o tempo conforme necessário
+
+# Selecionar a opção "Personalizado"
+navegador.find_element(By.XPATH, '/html/body/div[5]/div[3]/ul/li[5]').click()
+
+# Esperar o campo de data personalizado ficar visível
+time.sleep(2)  # Ajuste o tempo conforme necessário
+
+# Selecionar a data inicial e final (Exemplo: 1º de Maio de 2023 a 31 de Maio de 2023)
+# Obs: Dependendo de como o seletor de datas é implementado, você pode precisar ajustar esta parte
+navegador.find_element(By.NAME, 'daterangepicker_start').send_keys("01/05/2023")
+navegador.find_element(By.NAME, 'daterangepicker_end').send_keys("31/05/2023")
+
+# Clicar no botão "Confirmar"
+navegador.find_element(By.XPATH, '//button[@class="applyBtn btn btn-sm btn-success"]').click()
+
+# Esperar a página recarregar com os novos filtros
+time.sleep(5)
+
 
 # Encontrar todos os elementos de arquivos PDF e clicar neles
 arquivos_pdf = navegador.find_elements(By.XPATH, '//div[@class="mini-holder other-files pdf"]/..')
@@ -59,3 +76,4 @@ for arquivo in arquivos_pdf:
         navegador.switch_to.window(navegador.window_handles[0])
     except Exception as e:
         print(f"Erro ao clicar no arquivo: {e}")
+
