@@ -96,13 +96,14 @@ time.sleep(5)
 
 # Função para rolar a página até o final
 def rolar_ate_fim_pagina(driver):
+    prev_height = driver.execute_script("return document.body.scrollHeight")
     while True:
-        driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.PAGE_DOWN)
+        driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.END)
         time.sleep(2)  # Ajuste o tempo conforme necessário
-        # Verifique se mais elementos foram carregados
-        novos_elementos = driver.find_elements(By.XPATH, '//div[@class="mini-holder other-files pdf"]')
-        if not novos_elementos:
+        new_height = driver.execute_script("return document.body.scrollHeight")
+        if new_height == prev_height:
             break
+        prev_height = new_height
 
 # Rola até o fim da página para carregar todos os arquivos
 rolar_ate_fim_pagina(navegador)
