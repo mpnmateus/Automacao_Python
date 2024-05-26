@@ -2,6 +2,9 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+import time
 
 #configurar as opções do chrome
 chrome_options = Options ()
@@ -25,3 +28,34 @@ navegador.find_element('xpath', '//*[@id="password"]').send_keys("Financeiro@202
 
 # Clicando em 'Entrar'
 navegador.find_element('xpath', '//*[@id="do-login"]').click()
+
+# Esperar a página carregar (ajuste conforme necessário)
+time.sleep(5)
+
+"""
+# Função para rolar a página até o final
+def rolar_ate_fim_pagina(driver):
+    while True:
+        driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.PAGE_DOWN)
+        time.sleep(3)  # Ajuste o tempo conforme necessário
+        # Verifique se mais elementos foram carregados
+        novos_elementos = driver.find_elements(By.XPATH, '//div[@class="mini-holder other-files pdf"]')
+        if not novos_elementos:
+            break
+
+# Rolar até o fim da página para carregar todos os arquivos
+rolar_ate_fim_pagina(navegador)
+"""
+
+# Encontrar todos os elementos de arquivos PDF e clicar neles
+arquivos_pdf = navegador.find_elements(By.XPATH, '//div[@class="mini-holder other-files pdf"]/..')
+
+for arquivo in arquivos_pdf:
+    try:
+        # Clicar no link do arquivo PDF
+        arquivo.click()
+        time.sleep(2)  # Esperar a nova aba carregar
+        # Voltar para a aba original
+        navegador.switch_to.window(navegador.window_handles[0])
+    except Exception as e:
+        print(f"Erro ao clicar no arquivo: {e}")
