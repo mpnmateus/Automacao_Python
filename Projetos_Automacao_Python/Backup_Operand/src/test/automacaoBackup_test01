@@ -94,6 +94,18 @@ navegador.find_element(By.XPATH, '//*[@id="btn-filtrar"]').click()
 time.sleep(5)
 
 
+# Função para rolar a página até o final
+def rolar_ate_fim_pagina(driver):
+    while True:
+        driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.PAGE_DOWN)
+        time.sleep(2)  # Ajuste o tempo conforme necessário
+        # Verifique se mais elementos foram carregados
+        novos_elementos = driver.find_elements(By.XPATH, '//div[@class="mini-holder other-files pdf"]')
+        if not novos_elementos:
+            break
+
+# Rola até o fim da página para carregar todos os arquivos
+rolar_ate_fim_pagina(navegador)
 
 # Encontrar todos os elementos de arquivos PDF e clicar neles
 arquivos_pdf = navegador.find_elements(By.XPATH, '//div[@class="mini-holder other-files pdf"]/..')
