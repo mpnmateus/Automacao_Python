@@ -1,0 +1,27 @@
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+
+#configurar as opções do chrome
+chrome_options = Options ()
+chrome_options.add_experimental_option("detach", True)  # Manter a janela aberta
+
+# Instalar o driver do Chrome
+servico = Service(ChromeDriverManager().install())
+
+# Inicializar o navegador com as opções configuradas
+navegador = webdriver.Chrome(service=servico, options=chrome_options)
+
+# Maximizar a janela do navegador
+navegador.maximize_window()
+
+# Abrir a página desejada
+navegador.get("https://app3.operand.com.br/arquivos")
+
+# Preenchendo dados para login
+navegador.find_element('xpath', '//*[@id="email"]').send_keys("financeiro@agenciacondao.com.br")
+navegador.find_element('xpath', '//*[@id="password"]').send_keys("Financeiro@2023")
+
+# Clicando em 'Entrar'
+navegador.find_element('xpath', '//*[@id="do-login"]').click()
