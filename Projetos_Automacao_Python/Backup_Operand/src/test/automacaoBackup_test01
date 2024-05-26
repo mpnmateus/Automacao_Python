@@ -84,9 +84,14 @@ navegador.find_element(By.CSS_SELECTOR, 'body > div.daterangepicker.dropdown-men
 
 
 
+# Esperar para garantir que a seleção de datas foi confirmada
+time.sleep(2)  # Ajuste o tempo conforme necessário
+
+# Clicar no botão "Buscar"
+navegador.find_element(By.XPATH, '//*[@id="btn-filtrar"]').click()
+
 # Esperar a página recarregar com os novos filtros
 time.sleep(5)
-
 
 
 
