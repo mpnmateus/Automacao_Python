@@ -120,15 +120,16 @@ destino = r'C:\Users\mateu\Desktop\Anexos OPERAND\Downloads_automacao'
 
 # Salva as posições com as coordenadas obtidas (para definir destino)
 #campo_nome_x, campo_nome_y = 100, 200  # Verificar valores reais quando eu precisar
-campo_diretorio_x, campo_diretorio_y = 662, 206  # Substitua pelos valores reais
+campo_diretorio_x, campo_diretorio_y = 662, 206  # Coordenadas definição diretorio
+campo_salvar_x, campo_salvar_y = 786, 635 # Coordenadas botão salvar
 
 # Função para salvar arquivos PDF usando PyAutoGUI
 def salvar_pdf(destino):
-    if keyboard.is_pressed('esc'): #Tecla esc definida: parar execução
+    if keyboard.is_pressed('esc'): #Tecla esc definida: parar
         print("Interrupção pelo usuário")
         return
     
-    time.sleep(2)  # Esperar um momento para garantir que a página esteja carregada
+    time.sleep(4)  # Esperar um momento para garantir que a página esteja carregada
     pyautogui.hotkey('ctrl', 's')  # Pressionar Ctrl+S para abrir a janela de salvar
     time.sleep(2)  # Esperar a janela abrirC:\Users\mateu\Desktop\Anexos OPERAND\Downloads_automacao
 
@@ -137,8 +138,9 @@ def salvar_pdf(destino):
     pyautogui.typewrite(destino)  # Escrever o caminho do diretório
     pyautogui.press('enter')  # Confirmar o diretório
     time.sleep(2)  # Esperar um momento para o diretório ser confirmado
-    pyautogui.press('enter')  # Salvar o arquivo
-
+    pyautogui.click(campo_salvar_x, campo_salvar_y)
+    #pyautogui.press('enter')  # Salvar o arquivo
+    time.sleep(2)
 
 # Abrir cada arquivo PDF em uma nova aba e salvá-lo
 for arquivo in arquivos_pdf:
