@@ -1,0 +1,26 @@
+Seleção de Datas Corrigida:
+
+Usei os seletores de XPath fornecidos diretamente para os dias 1 e 31.
+O código agora usa navegador.find_element(By.XPATH, f"/html/body/div[5]/div[1]/div[2]/table/tbody/tr[1]/td[5]").click() para o dia 1 e 
+
+
+
+Para o dia 31:
+
+navegador.find_element(By.XPATH, f"/html/body/div[5]/div[2]/div[2]/table/tbody/tr[5]/td[7]").click() 
+
+
+
+-----
+Para o dia 30:
+
+navegador.find_element(By.XPATH, f"/html/body/div[5]/div[2]/div[2]/table/tbody/tr[5]/td[6]").click() 
+
+
+
+-----
+Para o dia 28:
+
+navegador.find_element(By.XPATH, f"/html/body/div[5]/div[2]/div[2]/table/tbody/tr[5]/td[4]").click() 
+
+
