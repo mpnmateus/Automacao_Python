@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
+import keyboard
 import time
 import pyautogui
 import os
@@ -41,19 +42,19 @@ time.sleep(5)
 navegador.find_element(By.XPATH, '//*[@id="btn-filtros"]').click()
 
 # Esperar o campo de data ficar visível
-time.sleep(4)  # Ajuste o tempo conforme necessário
+time.sleep(2)  # Ajuste o tempo conforme necessário
 
 # Clicar no campo de data para abrir o seletor de datas
 navegador.find_element(By.XPATH, '//*[@id="find_date"]').click()
 
 # Esperar o seletor de datas aparecer
-time.sleep(4)  # Ajuste o tempo conforme necessário
+time.sleep(2)  # Ajuste o tempo conforme necessário
 
 # Selecionar a opção "Personalizado"
 navegador.find_element(By.XPATH, '/html/body/div[5]/div[3]/ul/li[5]').click()
 
 # Esperar o campo de data personalizado ficar visível
-time.sleep(4)  # Ajuste o tempo conforme necessário
+time.sleep(2)  # Ajuste o tempo conforme necessário
 
 
 
@@ -117,15 +118,25 @@ arquivos_pdf = navegador.find_elements(By.XPATH, '//div[@class="mini-holder othe
 # Diretório de destino para salvar os PDFs
 destino = r'C:\Users\mateu\Desktop\Anexos OPERAND\Downloads_automacao'
 
+# Salva as posições com as coordenadas obtidas (para definir destino)
+#campo_nome_x, campo_nome_y = 100, 200  # Verificar valores reais quando eu precisar
+campo_diretorio_x, campo_diretorio_y = 662, 206  # Substitua pelos valores reais
+
 # Função para salvar arquivos PDF usando PyAutoGUI
 def salvar_pdf(destino):
+    if keyboard.is_pressed('esc'): #Tecla esc definida: parar execução
+        print("Interrupção pelo usuário")
+        return
+    
     time.sleep(2)  # Esperar um momento para garantir que a página esteja carregada
     pyautogui.hotkey('ctrl', 's')  # Pressionar Ctrl+S para abrir a janela de salvar
-    time.sleep(3)  # Esperar a janela abrirC:\Users\mateu\Desktop\Anexos OPERAND\Downloads_automacao
+    time.sleep(2)  # Esperar a janela abrirC:\Users\mateu\Desktop\Anexos OPERAND\Downloads_automacao
 
+    # Mover para o campo do diretório e colar o destino
+    pyautogui.click(campo_diretorio_x, campo_diretorio_y)
     pyautogui.typewrite(destino)  # Escrever o caminho do diretório
     pyautogui.press('enter')  # Confirmar o diretório
-    time.sleep(3)  # Esperar um momento para o diretório ser confirmado
+    time.sleep(2)  # Esperar um momento para o diretório ser confirmado
     pyautogui.press('enter')  # Salvar o arquivo
 
 
@@ -134,7 +145,7 @@ for arquivo in arquivos_pdf:
     try:
         # Clicar no link do arquivo PDF
         arquivo.click()
-        time.sleep(5)  # Esperar a nova aba carregar
+        time.sleep(2)  # Esperar a nova aba carregar
 
         # Alternar para a nova aba
         navegador.switch_to.window(navegador.window_handles[-1])
