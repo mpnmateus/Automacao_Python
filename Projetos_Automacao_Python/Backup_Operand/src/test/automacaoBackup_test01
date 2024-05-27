@@ -6,6 +6,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 import time
+import pyautogui
+import os
 
 #configurar as opções do chrome
 chrome_options = Options ()
@@ -111,13 +113,41 @@ rolar_ate_fim_pagina(navegador)
 # Encontrar todos os elementos de arquivos PDF e clicar neles
 arquivos_pdf = navegador.find_elements(By.XPATH, '//div[@class="mini-holder other-files pdf"]/..')
 
+
+# Diretório de destino para salvar os PDFs
+destino = r'C:\Users\mateu\Desktop\Anexos OPERAND\Downloads_automacao'
+
+# Função para salvar arquivos PDF usando PyAutoGUI
+def salvar_pdf(destino):
+    time.sleep(2)  # Esperar um momento para garantir que a página esteja carregada
+    pyautogui.hotkey('ctrl', 's')  # Pressionar Ctrl+S para abrir a janela de salvar
+    time.sleep(3)  # Esperar a janela abrirC:\Users\mateu\Desktop\Anexos OPERAND\Downloads_automacao
+
+    pyautogui.typewrite(destino)  # Escrever o caminho do diretório
+    pyautogui.press('enter')  # Confirmar o diretório
+    time.sleep(3)  # Esperar um momento para o diretório ser confirmado
+    pyautogui.press('enter')  # Salvar o arquivo
+
+
+# Abrir cada arquivo PDF em uma nova aba e salvá-lo
 for arquivo in arquivos_pdf:
     try:
         # Clicar no link do arquivo PDF
         arquivo.click()
-        time.sleep(2)  # Esperar a nova aba carregar
+        time.sleep(5)  # Esperar a nova aba carregar
+
+        # Alternar para a nova aba
+        navegador.switch_to.window(navegador.window_handles[-1])
+
+        # Salvar o PDF
+        salvar_pdf(destino)
+
+        # Fechar a aba atual
+        navegador.close()
+
         # Voltar para a aba original
         navegador.switch_to.window(navegador.window_handles[0])
     except Exception as e:
         print(f"Erro ao clicar no arquivo: {e}")
+
 
