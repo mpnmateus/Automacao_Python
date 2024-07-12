@@ -5,10 +5,10 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
+import keyboard
 import time
 import pyautogui
 import os
-import subprocess  # Biblioteca para executar outro arquivo .py
 
 #configurar as opções do chrome
 chrome_options = Options ()
@@ -19,7 +19,7 @@ servico = Service(ChromeDriverManager().install())
 
 # Inicializar o navegador com as opções configuradas
 navegador = webdriver.Chrome(service=servico, options=chrome_options)
-
+    
 # Maximizar a janela do navegador
 navegador.maximize_window()
 
@@ -61,28 +61,28 @@ time.sleep(2)  # Ajuste o tempo conforme necessário
 # Selecionar a data de início: xx/xx/xxx
 # Selecionar ano de início
 ano_inicio = Select(navegador.find_element(By.XPATH, '/html/body/div[5]/div[1]/div[2]/table/thead/tr[1]/th[2]/select[2]'))
-ano_inicio.select_by_visible_text("2021")
+ano_inicio.select_by_visible_text("2023")
 
 # Selecionar mês de início
 mes_inicio = Select(navegador.find_element(By.XPATH, '/html/body/div[5]/div[1]/div[2]/table/thead/tr[1]/th[2]/select[1]'))
-mes_inicio.select_by_visible_text("Agosto")
+mes_inicio.select_by_visible_text("Junho")
 
 #ALTERAR DIA INÍCIO
 # Selecionar dia de início
-navegador.find_element(By.XPATH, '/html/body/div[5]/div[1]/div[2]/table/tbody/tr[1]/td[7]').click()  # 1º dia
+navegador.find_element(By.XPATH, '/html/body/div[5]/div[1]/div[2]/table/tbody/tr[1]/td[4]').click()  # 1º dia
 
-# Selecionar a data de fim: xx/xx/xxxx
+# Selecionar a data de fim: 31/01/2021
 # Selecionar ano de fim
 ano_fim = Select(navegador.find_element(By.XPATH, '/html/body/div[5]/div[2]/div[2]/table/thead/tr[1]/th[2]/select[2]'))
-ano_fim.select_by_visible_text("2021")
+ano_fim.select_by_visible_text("2023")
 
 # Selecionar mês de fim
 mes_fim = Select(navegador.find_element(By.XPATH, '/html/body/div[5]/div[2]/div[2]/table/thead/tr[1]/th[2]/select[1]'))
-mes_fim.select_by_visible_text("Agosto")
+mes_fim.select_by_visible_text("Junho")
 
 #ALTERAR DIA FIM
 # Selecionar dia de fim
-navegador.find_element(By.XPATH, '/html/body/div[5]/div[2]/div[2]/table/tbody/tr[6]/td[2]').click()  # xxº dia
+navegador.find_element(By.XPATH, '/html/body/div[5]/div[2]/div[2]/table/tbody/tr[5]/td[5]').click()  # xxº dia
 
 # Confirmar a seleção das datas
 navegador.find_element(By.CSS_SELECTOR, 'body > div.daterangepicker.dropdown-menu.opensright.show-calendar > div.ranges > div > button.applyBtn.btn.btn-sm.btn-success').click()
@@ -118,12 +118,12 @@ arquivos_pdf = navegador.find_elements(By.XPATH, '//div[@class="mini-holder othe
 
 
 # Diretório de destino para salvar os PDFs
-destino = r'C:\Users\mateu\Desktop\Anexos OPERAND\2021\AGO'
+destino = r'C:\Users\mateu\Desktop\Anexos OPERAND\2023\JUN'
 
 # Salva as posições com as coordenadas obtidas (para definir destino)
 #campo_nome_x, campo_nome_y = 100, 200  # Verificar valores reais quando eu precisar
-campo_diretorio_x, campo_diretorio_y = 662, 206  # Coordenadas definição diretorio
-campo_salvar_x, campo_salvar_y = 776, 636 # Coordenadas botão salvar
+campo_diretorio_x, campo_diretorio_y = 591, 47  # Coordenadas definição diretorio
+campo_salvar_x, campo_salvar_y = 734, 471 # Coordenadas botão salvar
 
 # Função para salvar arquivos PDF usando PyAutoGUI
 def salvar_pdf(destino):
@@ -164,5 +164,4 @@ for arquivo in arquivos_pdf:
         navegador.switch_to.window(navegador.window_handles[0])
     except Exception as e:
         print(f"Erro ao clicar no arquivo: {e}")
-
 

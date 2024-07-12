@@ -6,6 +6,7 @@ print(po)
 
 
 
-
+"""
 keynames = pyautogui.KEYBOARD_KEYS
 print(keynames)
+"""
